@@ -11,70 +11,77 @@ Digital acknowledgement: Marco Roxas
 
 ### Part 1 (45 pts)
 
-By doing a web search for ejnorman84 a paste on pastebin is discovered (abbreviated contents shown):
+1.
+ejnorman84's real name looks to be Eric J. Norman
 
-https://pastebin.com/4yJRgkFm
+By doing a web search for ejnorman84 a paste on pastebin was discovered at https://pastebin.com/4yJRgkFm (abbreviated contents shown):
 
-.:L3AKED CR3DZ:.
-...
-Eric J. Norman...
-...
-ejnorman84:p********a
-ejnoman:@****************1
-EricNorman84:h*****
+    .:L3AKED CR3DZ:.
+    ...
+    Eric J. Norman...
+    ...
+    ejnorman84:p********a
+    ejnoman:@****************1
+    EricNorman84:h*****
 
-1. ejnorman84's real name looks to be Eric J. Norman
 
-2. ejnorman84 works for Watt's Amp, with a url of http://wattsamp.net
+2.
+ejnorman84 works for Watt's Amp, with a url of http://wattsamp.net
 
-This was found on their twitter page.
+(This was found on their twitter page)
 
-3. Social media accounts
+3.
+Social media accounts
 
 This was found via a search on https://usersearch.org and searching for EricNorman84:
 
 Twitter: https://twitter.com/EricNorman84
 
 Email accounts (Published on twitter page, also in whois via cli)
-ejnorman84@gmail.com
-ejnorman@protonmail.com
+
+ejnorman84@gmail.com  
+ejnorman@protonmail.com  
 
 (these addresses were verified by verify-email.org as well)
 
 Address & phone number (from whois via cli information)
-Eric Norman
-1300 Adabel Dr
-El Paso TX 79835
 
-+1.2026562837
+Eric Norman  
+1300 Adabel Dr  
+El Paso TX 79835  
+Phone: +1.2026562837
 
-4. IP addresses
-wattsamp.net  157.230.179.99
+4.
+IP addresses
+
+    wattsamp.net  157.230.179.99
 
 This information was discovered using the dig cli tool.
 
-5. hidden files or directories found on website:
+5.
+Hidden files or directories found on website:
 
 robots.txt
 
-6. Ports open on the website
-22 - the ssh port but it only allows public key authentication
-80 - the web server port
-1337 - labeled waste but can be logged into using nc or telnet (or a script)
+6.
+Ports open on the website
 
-7. I ran the nmap with the -O option but it couldn't discern the operating system but the web server discloses the server as Ubuntu server by going to a random location and getting 404
+22 - the ssh port but it only allows public key authentication  
+80 - the web server port  
+1337 - labeled waste but can be logged into using nc or telnet (or a script)  
+
+7.
+I ran the nmap with the -O option but it couldn't discern the operating system but the web server discloses the server as Ubuntu server by going to a random location and getting 404
 
 Apache/2.4.29 (Ubuntu) Server at wattsamp.net Port 80
 
-8. Easter eggs found so far:
+8.
+Easter eggs found so far:
 
-robots.txt
-
+robots.txt  
 Good for you! Bonus: *CMSC389R-{n0_indexing_pls}
 
-From https://securitytrails.com/list/ip/157.230.179.99
-
-https://securitytrails.com/list/ip/157.230.179.99
+From https://securitytrails.com/list/ip/157.230.179.99  
 *CMSC389R-{Do_you-N0T_See_this}
 
 From the web page by viewing the source (admin)

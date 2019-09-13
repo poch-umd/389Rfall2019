@@ -11,11 +11,28 @@ Digital acknowledgement: Marco Roxas
 
 ### Part 1 (45 pts)
 
-1. ejnorman84's real name is Eric J. Norman
+By doing a web search for ejnorman84 a paste on pastebin is discovered (abbreviated contents shown):
+
+https://pastebin.com/4yJRgkFm
+
+.:L3AKED CR3DZ:.
+...
+Eric J. Norman...
+...
+ejnorman84:p********a
+ejnoman:@****************1
+EricNorman84:h*****
+
+1. ejnorman84's real name looks to be Eric J. Norman
 
 2. ejnorman84 works for Watt's Amp, with a url of http://wattsamp.net
 
-3. Social media accounts (via web search)
+This was found on their twitter page.
+
+3. Social media accounts
+
+This was found via a search on https://usersearch.org and searching for EricNorman84:
+
 Twitter: https://twitter.com/EricNorman84
 
 Email accounts (Published on twitter page, also in whois via cli)
@@ -52,13 +69,15 @@ Apache/2.4.29 (Ubuntu) Server at wattsamp.net Port 80
 8. Easter eggs found so far:
 
 robots.txt
+
 Good for you! Bonus: *CMSC389R-{n0_indexing_pls}
 
 From https://securitytrails.com/list/ip/157.230.179.99
+
 https://securitytrails.com/list/ip/157.230.179.99
 *CMSC389R-{Do_you-N0T_See_this}
 
-From the web page (admin)
+From the web page by viewing the source (admin)
 
 
 ### Part 2 (75 pts)

@@ -33,16 +33,16 @@ ejnorman84 works for Watt's Amp, with a url of http://wattsamp.net
 3.
 Social media accounts
 
-This was found via a search on https://usersearch.org and searching for EricNorman84:
+A twitter page was found via a search on https://usersearch.org and searching for EricNorman84:
 
 Twitter: https://twitter.com/EricNorman84
 
-Email accounts (Published on twitter page, also in whois via cli)
+Email accounts (Published on twitter page, the first one was also from whois via cli)
 
 ejnorman84@gmail.com  
 ejnorman@protonmail.com  
 
-(these addresses were verified by verify-email.org as well)
+(these addresses were verified using verify-email.org as well)
 
 Address & phone number (from whois via cli information)
 
@@ -61,30 +61,31 @@ This information was discovered using the dig cli tool.
 5.
 Hidden files or directories found on website:
 
-robots.txt
+    robots.txt
 
 6.
 Ports open on the website
 
-22 - the ssh port but it only allows public key authentication  
-80 - the web server port  
-1337 - labeled waste but can be logged into using nc or telnet (or a script)  
+* 22 - the ssh port but it only allows public key authentication
+* 80 - the web server port
+* 1337 - labeled waste but can be logged into using nc or telnet (or a script)
 
 7.
-I ran the nmap with the -O option but it couldn't discern the operating system but the web server discloses the server as Ubuntu server by going to a random location and getting 404
+The web server discloses the server as Ubuntu server as part of a file not found error message:
 
 Apache/2.4.29 (Ubuntu) Server at wattsamp.net Port 80
 
 8.
 Easter eggs found so far:
 
-robots.txt  
-Good for you! Bonus: *CMSC389R-{n0_indexing_pls}
+In robots.txt  
+    *CMSC389R-{n0_indexing_pls}
 
 From https://securitytrails.com/list/ip/157.230.179.99  
-*CMSC389R-{Do_you-N0T_See_this}
+    *CMSC389R-{Do_you-N0T_See_this}
 
-From the web page by viewing the source (admin)
+From the web page by viewing the source (main page)
+    *CMSC389R-{html_h@x0r_lulz}
 
 
 ### Part 2 (75 pts)

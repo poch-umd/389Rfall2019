@@ -70,7 +70,9 @@ Ports open on the website
 * 80 - the web server port
 * 1337 - labeled waste but can be logged into using nc or telnet (or a script)
 
-These were discovered using nmap running in a Kali VM within the UMD network.
+These were discovered using nmap running in a Kali VM within the UMD network with the ff. command:
+
+    nmap -v --version-all -p1-5000 157.230.179.99
 
 7.
 The web server discloses the server as Ubuntu server as part of a file not found error message:

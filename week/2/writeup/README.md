@@ -105,7 +105,7 @@ The pastebin paste offered the ff. info for passwords:
 * starts with the @ symbol, then 16 characters, and ends with a 1
 * starts with an h, and ends with 5 characters
 
-Thus these passwords were extracted from the rockyou.txt.gz file to three separate files and used as input to the script.  A sample command to do this is `zcat /usr/share/wordlists/rockyou.txt.gz | perl -wnl -e '/(h.{5}$)/ and print $1' > h_5.txt`
+Thus these passwords were extracted from the rockyou.txt.gz file to three separate files and used as input to the script.  A sample command to do this is `zcat /usr/share/wordlists/rockyou.txt.gz | perl -wnl -e '/^(h.{5}$)/ and print $1' > h_5.txt`
 
 A heuristic was attempted based on the pastebin information; by running the script several times with different passwords it got discovered that a username of ejnorman84 and password hello1 worked (ie, since other attempts didn't work or just took too long, why not try ejnorman84 and the passwords starting with h?)
 

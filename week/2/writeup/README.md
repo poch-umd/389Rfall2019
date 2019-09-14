@@ -94,11 +94,11 @@ From the web page by viewing the source (main page)
 
 *Please use this space to detail your approach and solutions for part 2. Don't forget to upload your completed source code to this /writeup directory as well!*
 
-By telnetting to the target server, some basic experiments were performed to better understand what inputs are valid with the program running on port 1337.
+By telnetting to the target server, some basic experiments were performed to better understand what inputs are accepted by the program running on port 1337.
 
-An approach was then seen to loop through a password list, each time making a connection, passing the captcha by providing an answer, then trying a username and password and disconnecting.  A small script in ruby (should run on any version 2, 2.5 was used) was written (please see bruteforce.rb).
+An approach was then seen to loop through a password list, each time making a connection, passing the captcha by providing an answer, then trying a username and password, outputting the result and disconnecting.  A small script in ruby (should run on any version 2, 2.5 was used) was written (please see bruteforce.rb, it is run with ./bruteforce.rb, the h_5.txt input file can be generated with the zcat command below).
 
-The script is imperfect (it was found that a tab entered after the captcha answer follewed by the enter key allowed a username entry, without the tab it failed) but worked well enough.  A rudimentary shell loop was used  upon success.
+The script is imperfect (it was found that a tab entered after the captcha answer followed by the enter key allowed a username entry, without the tab it failed) but worked well enough.  A rudimentary shell loop was entered upon success.
 
 The pastebin paste offered the ff. info for passwords:
 * starts with a p, then 8 characters, and ends with a
@@ -109,7 +109,7 @@ Thus these passwords were extracted from the rockyou.txt.gz file to three separa
 
 A heuristic was attempted based on the pastebin information; by running the script several times with different passwords it got discovered that a username of ejnorman84 and password hello1 worked (ie, since other attempts didn't work or just took too long, why not try ejnorman84 and the passwords starting with h?)
 
-Using the nc utility, a login shell was obtained using ejnorman8/hello1 and the flag was discovered in /home/flag.txt after several cd's into various directories:
+Using the nc utility, a login shell was obtained using ejnorman84/hello1 and the flag was discovered in /home/flag.txt after several cd's into various directories:
 
     Good! Here's your flag: CMSC389R-{!enough_nrg_4_a_str0ng_Pa$$wrd}
 

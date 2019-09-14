@@ -96,14 +96,16 @@ From the web page by viewing the source (main page)
 
 By telnetting to the target server, some basic experiments were performed to better understand what inputs are valid with the program running on port 1337.
 
-An approach was then seen to loop through a password list, each time making a connection, passing the captcha by providing an answer, then trying a username and password and disconnecting.  A small script in ruby (should run on any version 2, 2.5 was used) was written (please see bruteforce.rb)
+An approach was then seen to loop through a password list, each time making a connection, passing the captcha by providing an answer, then trying a username and password and disconnecting.  A small script in ruby (should run on any version 2, 2.5 was used) was written (please see bruteforce.rb).
+
+The script is imperfect (it was found that a tab entered after the captcha answer follewed by the enter key allowed a username entry, without the tab it failed) but worked well enough.  A rudimentary shell loop was used  upon success.
 
 The pastebin paste offered the ff. info for passwords:
 * starts with a p, then 8 characters, and ends with a
 * starts with the @ symbol, then 16 characters, and ends with a 1
 * starts with an h, and ends with 5 characters
 
-Thus these passwords were extracted from the rockyou.txt.gz file to separate files and used as input to the script.  A sample command to do this is `zcat /usr/share/wordlists/rockyou.txt.gz | perl -wnl -e '/(h.{5}$)/ and print $1' > h_5.txt`
+Thus these passwords were extracted from the rockyou.txt.gz file to three separate files and used as input to the script.  A sample command to do this is `zcat /usr/share/wordlists/rockyou.txt.gz | perl -wnl -e '/(h.{5}$)/ and print $1' > h_5.txt`
 
 A heuristic was attempted based on the pastebin information; by running the script several times with different passwords it got discovered that a username of ejnorman84 and password hello1 worked (ie, since other attempts didn't work or just took too long, why not try ejnorman84 and the passwords starting with h?)
 

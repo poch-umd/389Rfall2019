@@ -70,6 +70,8 @@ Ports open on the website
 * 80 - the web server port
 * 1337 - labeled waste but can be logged into using nc or telnet (or a script)
 
+These were discovered using nmap running in a Kali VM within the UMD network.
+
 7.
 The web server discloses the server as Ubuntu server as part of a file not found error message:
 
@@ -79,15 +81,33 @@ Apache/2.4.29 (Ubuntu) Server at wattsamp.net Port 80
 Easter eggs found so far:
 
 In robots.txt  
-    *CMSC389R-{n0_indexing_pls}
+`*CMSC389R-{n0_indexing_pls}`
 
 From https://securitytrails.com/list/ip/157.230.179.99  
-    *CMSC389R-{Do_you-N0T_See_this}
+`*CMSC389R-{Do_you-N0T_See_this}`
 
-From the web page by viewing the source (main page)
-    *CMSC389R-{html_h@x0r_lulz}
+From the web page by viewing the source (main page)  
+`*CMSC389R-{html_h@x0r_lulz}`
 
 
 ### Part 2 (75 pts)
 
 *Please use this space to detail your approach and solutions for part 2. Don't forget to upload your completed source code to this /writeup directory as well!*
+
+By telnetting to the target server, some basic experiments were performed to better understand what inputs are valid with the program running on port 1337.
+
+An approach was then seen to loop through a password list, each time making a connection, passing the captcha by providing an answer, then trying a username and password and disconnecting.  A small script in ruby (should run on any version 2, 2.5 was used) was written (please see bruteforce.rb)
+
+The pastebin paste offered the ff. info for passwords:
+* starts with a p, then 8 characters, and ends with a
+* starts with the @ symbol, then 16 characters, and ends with a 1
+* starts with an h, and ends with 5 characters
+
+Thus these passwords were extracted from the rockyou.txt.gz file to separate files and used as input to the script.  A sample command to do this is `zcat /usr/share/wordlists/rockyou.txt.gz | perl -wnl -e '/(h.{5}$)/ and print $1' > h_5.txt`
+
+A heuristic was attempted based on the pastebin information; by running the script several times with different passwords it got discovered that a username of ejnorman84 and password hello1 worked (ie, since other attempts didn't work or just took too long, why not try ejnorman84 and the passwords starting with h?)
+
+Using the nc utility, a login shell was obtained using ejnorman8/hello1 and the flag was discovered in /home/flag.txt after several cd's into various directories:
+
+    Good! Here's your flag: CMSC389R-{!enough_nrg_4_a_str0ng_Pa$$wrd}
+

@@ -48,4 +48,4 @@ Questions such as asking for the name of the first pet, mother's maiden name, wh
 
 Upon entering the ATM pin number the page would then thank the user and ask them to close the browser window for security purposes.  Meanwhile the information has been collected along with the web browser that Eric was using.
 
-Last, the $10 can usually be deposited anonymously at a local branch (I can explain that I owe Eric money) if they withhold the receipt for security purposes.
+Last, the $10 can usually be deposited anonymously at a local branch (I can explain that I owe Eric money) if the deposit receipt is withheld for security purposes.

@@ -49,3 +49,19 @@ Questions such as asking for the name of the first pet, mother's maiden name, wh
 Upon entering the ATM pin number the page would then thank the user and ask them to close the browser window for security purposes.  Meanwhile the information has been collected along with the web browser that Eric was using.
 
 Last, the $10 can usually be deposited anonymously at a local branch (I can explain that I owe Eric money) if the deposit receipt is withheld for security purposes.
+
+### Part 2 (Answer)
+
+Three vulnerabilities found from the last assignment:
+
+- The shell obtained was for the root user
+- Unencrypted traffic
+- The password was found on a SETI password list (rockyou.txt)
+
+The shell that was obtained in port 1337 was for the root user, which is gives an adversary total control of the remote system when security is compromised. It is suggested to change the user to the least-privileged user. This is an application of least privilege as explained in the Wikipedia article at [https://en.wikipedia.org/wiki/Principle_of_least_privilege]
+
+The network traffic to/from port 1337 is unencrypted and can be sniffed, compromising the password and any confidential data. The suggestion here is to set up a secondary VM for that app that is not publicly accessible but is attached to wattsamp server via an internal network. The app can be accessed by logging in via ssh to wattsamp.net and once a secure ssh session is established, log in to the secondary VM. Instructions for setting up an internal network are found at [https://www.digitalocean.com/docs/networking/private-networking/how-to/enable/]
+
+The password can be guessed from a password list. This leaves service vulnerable to a potential brute-force attack. The password should be changed to a difficult-to-guess password and stored securely using a password manager such as [https://www.lastpass.com/].
+
+A final suggestion to enhance security: access to the admin page on the website should be via an unpublished url and should utilize encryption; a certificate should be obtained for the wattsamp.net website and installed using instructions from [https://www.digitalocean.com/community/tutorials/how-to-install-an-ssl-certificate-from-a-commercial-certificate-authority]

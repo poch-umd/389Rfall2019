@@ -56,12 +56,12 @@ Three vulnerabilities found from the last assignment:
 
 - The shell obtained was for the root user
 - Unencrypted traffic
-- The password was found on a SETI password list (rockyou.txt)
+- The password was found on a SET password list (rockyou.txt)
 
-The shell that was obtained in port 1337 was for the root user, which is gives an adversary total control of the remote system when security is compromised. It is suggested to change the user to the least-privileged user. This is an application of least privilege as explained in the Wikipedia article at [https://en.wikipedia.org/wiki/Principle_of_least_privilege]
+The shell that was obtained in port 1337 was for the root user, which gives an adversary total control of the remote system when security is compromised. It is suggested to change the user to the least-privileged user. This is an application of least privilege as explained in the Wikipedia article at [https://en.wikipedia.org/wiki/Principle_of_least_privilege]
 
 The network traffic to/from port 1337 is unencrypted and can be sniffed, compromising the password and any confidential data. The suggestion here is to set up a secondary VM for that app that is not publicly accessible but is attached to wattsamp server via an internal network. The app can be accessed by logging in via ssh to wattsamp.net and once a secure ssh session is established, log in to the secondary VM. Instructions for setting up an internal network are found at [https://www.digitalocean.com/docs/networking/private-networking/how-to/enable/]
 
-The password can be guessed from a password list. This leaves service vulnerable to a potential brute-force attack. The password should be changed to a difficult-to-guess password and stored securely using a password manager such as [https://www.lastpass.com/].
+The password can be guessed from a password list. This leaves the service vulnerable to a potential brute-force attack. The password should be changed to a difficult-to-guess password and stored securely using a password manager such as [https://www.lastpass.com/]. In addition, the password should be changed periodically, see [https://blog.lastpass.com/2018/08/often-change-password.html/]. It's assumed that the app cannot be changed to utilize other forms of authentication (such as one-time passwords, see [https://en.wikipedia.org/wiki/One-time_password]).
 
 A final suggestion to enhance security: access to the admin page on the website should be via an unpublished url and should utilize encryption; a certificate should be obtained for the wattsamp.net website and installed using instructions from [https://www.digitalocean.com/community/tutorials/how-to-install-an-ssl-certificate-from-a-commercial-certificate-authority]

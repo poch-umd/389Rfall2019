@@ -126,10 +126,12 @@ Ncat: Broken pipe.
 
 ### Part 2 (55 pts)
 
-A short ruby script was written to leverage the command-line injection vulnerability.
+A short ruby script was written to leverage the command-line injection vulnerability.  (The script can be run as ./shell.rb under any environment with Ruby 2.x, the she-bang line might have to be changed to point to the correct path)
 
 The script prints a menu of options to drop into a shell or download files. The shell is implemented as a loop that reads the command the user wishes to run, and then opens a network connection, runs it via command-line injection, and then presents the output to the user. The download function is implemented similarly except that the cat command is run and the resulting output is captured to a file.
 
-The user's current directory had to be remembered between sessions of the shell because the session is essentially stateless. A class CdDir was created to hold this current directory. Each command is prefixed by a cd command before the user's command.
+The user's current directory had to be remembered between shell sessions because each session is essentially stateless. A class CdDir was created to hold this current directory and preserve it across ecah session (each command is prefixed by a cd command before the user's command).
 
-The script can be run as ./shell.rb under any environment with Ruby 2.x.
+An example command to pull is: pull /home/flag.txt flag.txt which would cat the flag file remotely and save the output into flag.txt. The pull command can be made more sophisticated by testing for the file's existence beforehand (via if [ -f file ]; then echo exists; done), and also if binary files cannot download properly the uudecode command can be used.
+
+The CdDir does accomodate the .. (double-dot) however in the current program it treats it as a regular name.

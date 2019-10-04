@@ -24,12 +24,20 @@ class CdDir
     puts @path_components
     puts @path_components.size
   end
+
+  def initialize path_to_set
+    path_components = path_to_set.split('/') - [ '' ]
+    @path_components = path_components if path_components
+    @path = path_to_set
+  end
+
 end
 
 menu = "Please enter a number:\n1. shell\n2. pull <remote-path> <local-path>\n3. help\n4. quit"
 wd = CdDir.new '/'
 
 def shell wd
+  require 'socket'
   # print a shell prompt w/ the directory
   # allow the user to enter a command
   # if it's a cd command then change the CdDir
@@ -37,7 +45,7 @@ def shell wd
   # capture the output and show it on the screen for the user
 end
 
-def pull remote local
+def pull remote, local
   # run cat on the remote
   # capture output to the local file
 end
@@ -56,3 +64,5 @@ while selection = gets.chomp do
   end
   puts menu
 end
+
+__END__

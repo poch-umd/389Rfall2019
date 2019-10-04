@@ -37,7 +37,11 @@ class CdDir
   end
 
   def path_prompt
-    @path_components.join( '/' )
+    if @path_components.size == 0
+      '/'
+    else
+      @path_components.join( '/' )
+    end
   end
 end
 
@@ -80,6 +84,7 @@ def shell wd
     s.each_line do |line|
       puts line
     end
+    prompt = wd.path_prompt + '> '
     print prompt
   end
   s.close

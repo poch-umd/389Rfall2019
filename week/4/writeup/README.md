@@ -13,7 +13,7 @@ Digital acknowledgement: Marco Roxas
 
 In summary, the steps taken were:
 
-- Experimented with accepted input (ip address, eg, 157...., 8.8.8.8, localhost)
+- Experimented with accepted input (ip address, eg, 157.230.179.99, 8.8.8.8, localhost)
 - Experimented with the semicolon as it's a common command line injection technique (eg, ;ls, ;whoami)
 - Tried ;ls home (led to flag)
 - Tried ;ps aux (led to opt/container_startup.sh)

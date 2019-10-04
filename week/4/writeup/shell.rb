@@ -4,6 +4,7 @@ IP_ADDRESS = '157.230.179.99'
 PORT = 1337
 REMOTE_PROMPT = "Enter IP address: "
 CD_REGEX = /^\s*cd\s*(.+)\s*$/
+PULL_REGEX = /^\s*pull (.*?) (.*?)\s*$/i
 
 class CdDir
   attr_reader :path
@@ -72,10 +73,6 @@ def shell wd
     s = TCPSocket.new IP_ADDRESS, PORT
     puts s.gets
     puts s.gets
-    #if s.read == REMOTE_PROMPT
-    #  puts "Sending #{string_to_send}"
-    #  s.puts string_to_send
-    #end
     puts s.read ( REMOTE_PROMPT.size )
 
     puts "Sending #{string_to_send}"
@@ -93,6 +90,18 @@ end
 def pull remote, local
   # run cat on the remote
   # capture output to the local file
+  require 'socket'
+  s = TCPSocket.new IP_ADDRESS, PORT
+  out = File.open( local, 'w' )
+  puts s.gets
+  puts s.gets
+  puts s.read ( REMOTE_PROMPT.size )
+  string_to_send = ";cat #{remote}"
+  s.puts string_to_send
+  s.each_line do |line|
+    out.puts line
+  end
+  out.close
 end
 
 menu = "Please type your selection:\n1. shell\n2. pull <remote-path> <local-path>\n3. help\n4. quit"
@@ -106,8 +115,8 @@ while selection = gets.chomp do
       break
     when /^\s*shell\s*$/i
       shell wd
-    when /^\s*pull (.*?) (.*?)\s*$/i
-      puts selection
+    when PULL_REGEX
+      pull PULL_REGEX.match( selection )[ 1 ], PULL_REGEX.match( selection )[ 2 ]
     when /^\s*help\s*$/i
       puts selection
   end

@@ -26,6 +26,33 @@ class CdDir
   end
 end
 
-m = CdDir.new
-m.path = ARGV.first || "    ////hi"
-puts m.path
+menu = "Please enter a number:\n1. shell\n2. pull <remote-path> <local-path>\n3. help\n4. quit"
+wd = CdDir.new '/'
+
+def shell wd
+  # print a shell prompt w/ the directory
+  # allow the user to enter a command
+  # if it's a cd command then change the CdDir
+  # if it's a command then output the ; cd ; <command>
+  # capture the output and show it on the screen for the user
+end
+
+def pull remote local
+  # run cat on the remote
+  # capture output to the local file
+end
+
+puts menu
+while selection = gets.chomp do
+  case selection
+    when /^\s*quit\s*$/i
+      break
+    when /^\s*shell\s*$/i
+      puts selection
+    when /^\s*pull (.*?) (.*?)\s*$/i
+      puts selection
+    when /^\s*help\s*$/i
+      puts selection
+  end
+  puts menu
+end

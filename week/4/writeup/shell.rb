@@ -121,8 +121,7 @@ while selection = gets.chomp do
       shell wd
     when PULL_REGEX
       pull PULL_REGEX.match( selection )[ 1 ], PULL_REGEX.match( selection )[ 2 ]
-    when /^\s*help\s*$/i
-      puts selection
+    else
   end
   puts menu
 end

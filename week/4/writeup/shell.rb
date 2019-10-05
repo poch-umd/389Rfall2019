@@ -5,6 +5,8 @@ PORT = 1337
 REMOTE_PROMPT = "Enter IP address: "
 CD_REGEX = /^\s*cd\s*(.+)\s*$/
 PULL_REGEX = /^\s*pull (.*?) (.*?)\s*$/i
+ABSOLUTE_PATH = /^\s*\/.*?$/
+DOUBLE_DOT = /^\s*\.\.\s*$/
 
 class CdDir
   attr_reader :path
@@ -16,19 +18,21 @@ class CdDir
     end
 
     path_components = path_to_set.split('/') - [ '' ]
+    @path_components ||= []
 
-    if path_to_set =~ /^\s*\/.*?$/
+    if path_to_set =~ ABSOLUTE_PATH
       @path_components = path_components if path_components
       @path = path_to_set
+    elsif path_to_set =~ DOUBLE_DOT
+      @path_components.pop
+      @path = '/' + @path_components.join( '/' )
     else
-      puts "relative path"
       # alter the stored path to include the new path
-      @path_components ||= []
       @path_components = @path_components + path_components
       @path = '/' + @path_components.join( '/' )
     end
-    puts @path_components
-    puts @path_components.size
+    #puts @path_components
+    #puts @path_components.size
   end
 
   def initialize path_to_set
@@ -65,17 +69,17 @@ def shell wd
         break
       when CD_REGEX
         wd.path = CD_REGEX.match( input )[ 1 ]
-        string_to_send = ";cd #{wd.path}; ls"
+        string_to_send = ";cd #{wd.path};"
       else
-        string_to_send = ";cd #{wd.path}; #{input}"
+        string_to_send = ";cd #{wd.path}; #{input};"
     end
 
     s = TCPSocket.new IP_ADDRESS, PORT
-    puts s.gets
-    puts s.gets
-    puts s.read ( REMOTE_PROMPT.size )
+    s.gets
+    s.gets
+    s.read ( REMOTE_PROMPT.size )
+    #puts "Sending #{string_to_send}"
 
-    puts "Sending #{string_to_send}"
     s.puts string_to_send
 
     s.each_line do |line|
@@ -93,9 +97,9 @@ def pull remote, local
   require 'socket'
   s = TCPSocket.new IP_ADDRESS, PORT
   out = File.open( local, 'w' )
-  puts s.gets
-  puts s.gets
-  puts s.read ( REMOTE_PROMPT.size )
+  s.gets
+  s.gets
+  s.read ( REMOTE_PROMPT.size )
   string_to_send = ";cat #{remote}"
   s.puts string_to_send
   s.each_line do |line|

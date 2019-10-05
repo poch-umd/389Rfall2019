@@ -3,8 +3,8 @@
 IP_ADDRESS = '157.230.179.99'
 PORT = 1337
 REMOTE_PROMPT = "Enter IP address: "
-CD_REGEX = /^\s*cd\s*(.+)\s*$/
-PULL_REGEX = /^\s*pull (.*?) (.*?)\s*$/i
+CD_REGEX = /^\s*cd\s*(.*)\s*$/
+PULL_REGEX = /^\s*pull\s+(.*)\s+(.*)\s*$/i
 ABSOLUTE_PATH = /^\s*\/.*?$/
 DOUBLE_DOT = /^\s*\.\.\s*$/
 

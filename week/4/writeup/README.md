@@ -134,6 +134,6 @@ The user's current directory had to be remembered between shell sessions because
 
 An example command to pull is: pull /home/flag.txt flag.txt which would cat the flag file remotely and save the output into flag.txt. The pull command can be made more sophisticated by testing for the file's existence beforehand (via if [ -f file ]; then echo exists; done), and by enabling binnary downloads if binary files cannot download properly using the cat method (the uuencode command can be used).
 
-The CdDir does accomodate the .. (double-dot) although the program could handle this better. The double-dot only works when it's by itself (multi-level double-dots aren't currently being parsed).
+The CdDir does accomodate the .. (double-dot) although the program could handle this better. The double-dot only works when it's by itself (multi-level double-dots aren't currently being parsed). Also the cd command by itself (to go to the home directory) isn't supported currently.
 
 Lastly, the program has limited error checking; in particular if a network connection cannot be made then an exception occurs.

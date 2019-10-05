@@ -22,11 +22,11 @@ By starting with an IP address to see the response and then experimenting with d
 
 But it was odd at first because the connection would time out and it wasn't obvious that spaces were allowed in the input. I initially thought that only single keywords were allowed. So I tried various quote characters and double-dashes to get around to what I thought was a single-keyword limitation. Multiple commands were tried as well, separated by varying spaces, but with not much luck.
 
-Fortunately I realized I could include spaces (which overcame a serious limitation) and was able to look in the /home directory and cat the flag.
+Fortunately I discovered that I could include spaces (which overcame a serious limitation) and was able to look in the /home directory and cat the flag.
 
-  Good! Here's your flag: CMSC389R-{p1ng_as_a_$erv1c3}
+`Good! Here's your flag: CMSC389R-{p1ng_as_a_$erv1c3}`
 
-Just by habit I tried ps aux and saw a script running. Not knowing what it was (I wanted to know what was in opt first) I did a find opt and cat the script, which showed how the ping script. It appears that this is the script behind the service, somehow the echo commands are redirected to the remote client and the read is taken from the client.
+Just by habit I tried ps aux and saw a script running. Not knowing what it was (I wanted to know what was in opt first) I did a find opt and cat'd the script, which showed how the ping script operates. It appears that this is the script behind the service, somehow the echo commands are redirected to the remote client and the read is taken from the client.
 
 ~~~~
 #!/bin/bash
@@ -130,8 +130,10 @@ A short ruby script was written to leverage the command-line injection vulnerabi
 
 The script prints a menu of options to drop into a shell or download files. The shell is implemented as a loop that reads the command the user wishes to run, and then opens a network connection, runs it via command-line injection, and then presents the output to the user. The download function is implemented similarly except that the cat command is run and the resulting output is captured to a file.
 
-The user's current directory had to be remembered between shell sessions because each session is essentially stateless. A class CdDir was created to hold this current directory and preserve it across ecah session (each command is prefixed by a cd command before the user's command).
+The user's current directory had to be remembered between shell sessions because each session is stateless. A class CdDir was created to hold this current directory and preserve it across each session (each command is prefixed by a cd command before the user's command).
 
-An example command to pull is: pull /home/flag.txt flag.txt which would cat the flag file remotely and save the output into flag.txt. The pull command can be made more sophisticated by testing for the file's existence beforehand (via if [ -f file ]; then echo exists; done), and also if binary files cannot download properly the uudecode command can be used.
+An example command to pull is: pull /home/flag.txt flag.txt which would cat the flag file remotely and save the output into flag.txt. The pull command can be made more sophisticated by testing for the file's existence beforehand (via if [ -f file ]; then echo exists; done), and by enabling binnary downloads if binary files cannot download properly using the cat method (the uuencode command can be used).
 
-The CdDir does accomodate the .. (double-dot) however in the current program it treats it as a regular name.
+The CdDir does accomodate the .. (double-dot) although the program could handle this better. The double-dot only works when it's by itself (multi-level double-dots aren't currently being parsed).
+
+Lastly, the program has limited error checking; in particular if a network connection cannot be made then an exception occurs.

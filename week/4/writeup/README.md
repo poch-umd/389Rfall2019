@@ -48,7 +48,7 @@ output=$(eval $cmd)
 echo "$output"
 ~~~~
 
-To address this vulnerability the input can be whitelisted as a valid ip address before running the ping command.
+To address this vulnerability the input can be whitelisted as a valid ip address before running the ping command. If the command is just to check if the website is responding to ping requests then the IP address can be fixed, no user input is necessary. And if the ping can be performed elsewhere then the service can be removed from the server altogether.
 
 A brief transcript is included below:
 

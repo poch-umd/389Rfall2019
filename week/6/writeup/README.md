@@ -29,7 +29,7 @@ When disassembled and shown in graphical form in binaryninja, the check routines
 
 In addition there always was a block of assembler that called into the update_flag routine upon success.
 
-The difference between the check routines were in their structure - check2 had a loop whereas check1 didn't, and check3 utilized a multi-way branch via a switch whereas the others had if/else logic. These differences indicated the nature of each check.
+The difference between the check routines were in their structure - check3 utilized a multi-way branch via a switch whereas check1 and check2 had if/else logic. These differences indicated the nature of each check routine.
 
 The flag looks to be computed somehow. I took a look at the routine in binaryninja and it was a block of assembler code, so the flag wasn't stored in the traditional sense. The routine also had five parameters.
 

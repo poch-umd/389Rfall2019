@@ -20,10 +20,10 @@ The final input consisted of the following:
 * FOOBAR=" my eyes" as an exported environment variable
 * " they burn" as a 10-byte text file named sesame
 
-The checks looked to be implemented as follows:
+The checks looked to be as follows:
 * check1 - seemed to read a string from somewhere and did a strcmp() with the string "Oh God".  I just guessed that it was probably reading from the command line
-* check2 - called setenv() and there were two strings "FOOBAR" and "seye ym " so initially it looked like it was just checking if FOOBAR contained that string. But check2 was doing some processing in the comparison, so a sensible guess was that it was probably comparing the reverse, so that's what I set FOOBAR to
-* check3 - performed an open() and a read() so that had to mean a file, and "sesame" was one of the parameters pushed on the stack so that must be the filename. There was a buffer that was memset and the size was 11 bytes (10 plus another for the null) so that must be the size of the required string. There was a branch of checks that looked to be for each letter (in their ascii ordinal value) which spelled out " they burn"
+* check2 - called getenv() and there were two strings "FOOBAR" and "seye ym " so initially it looked like it was just checking if FOOBAR contained that string. But check2 was doing some processing in the comparison, so a sensible guess was that it was probably comparing the reverse, so that's what I set FOOBAR to
+* check3 - performed an open(), read(), and close() so that had to mean a file, and a pointer to "sesame" was one of the parameters pushed on the stack so that must be the filename. There was a buffer that was memset and the size was 11 bytes (10 plus another for the null) so that must be the size of the required string. There was a branch of checks that looked to be for each letter (in their ascii ordinal value) which spelled out " they burn"
 
 When disassembled and shown in graphical form in binaryninja, the check routines looked to have the same pattern in common of reading from some input and then performing an assembler cmp.  Those cmp's and their corresponding conditional jumps represented if/else branches in the original source. Then there was a recurring return value of 0xffffffff (-1 in signed decimal) indicating failure.
 

@@ -39,25 +39,25 @@ By storing the hash of the encrypted message; this is flawed because the hash it
 
 6. How does the application ensure Authenticity? Is this flawed in any way?
 
-I don't think that it does, and that's the flaw right there.
+I don't think that it ensures authenticity.
 
 7. How is the initialization vector generated and subsequently stored? Are there any issues with this implementation?
 
-It is randomly generated and stored as is. The IV is typically stored in this manner.
+It is randomly generated and stored as is. The IV is typically stored in this manner (I think)
 
 ### Part 2 (45 Pts)
 
 1. Develop the crack utility in a language of your choice..
 
-In order to compile ledger.c, `sudo apt install libssl-dev` was run (which installed 1.1.0l). But on a recent Kali version I kept getting compilation errors so I used a 32-bit version of Debian which worked.
+First in order to compile ledger.c, `sudo apt install libssl-dev` was run (which installed 1.1.0l). But on a recent Kali version I kept getting compilation errors so I used a 32-bit version of Debian which worked.
 
-By looking at `ledger.c` it can be seen that the passcode is hashed, but only the first two bytes are hashed subsequently to produce the stored passcode hash. As such the search space has been reduced to 256^2 = 65536; thus to reverse the process it's only necessary to find 65536 passcodes whose first two bytes of their md5 hash range from 0..65536 (ie, when interpreted as a 16-bit unsigned number).
+Then by looking at `ledger.c` it can be seen that the passcode is hashed, but only the first two bytes are hashed subsequently to produce the stored passcode hash. As such the search space has been reduced to 256^2 = 65536; thus to reverse the process it's only necessary to find 65536 passcodes whose first two bytes of their md5 hash range from 0..65536 (ie, when interpreted as a 16-bit unsigned number).
 
 The table to reverse the hash is called a rainbow table; two can be used but it can also be just one. In this case two were used for ease of implementation.
 
 After some hacking and trial-and-error, I arrived at the following process:
 
-Generate one rainbow table by hashing lines of `rockyou.txt` and inspecting the first two bytes of the hash and taking only 65536 unique ones. Two perl one-liners were written and placed in the `Makefile` which perform this type of filtering. These unique hash/password pairs are saved in `crack.rb` for later use.
+Generate one rainbow table by hashing lines of the `rockyou.txt` wordlist and inspecting the first two bytes of the hash and taking only 65536 unique ones. Two perl one-liners were written and placed in the `Makefile` which perform this type of filtering. These unique hash/password pairs are saved in `crack.rb` for later use. `rockyou_command.sh` was added to locate the wordlist.
 
 Generate another rainbow table by hashing the range 0..65536. This was written as a one-liner in `crack.rb` (other lines are there to read `ledger.bin` among other things)
 
@@ -65,7 +65,7 @@ Finally read off the MD5 hash of `ledger.bin` consult the two rainbow tables to 
 
 `ledger` can be run using `crack` with backticks or alternatively as `./ledger $(writeup/crack)` 
 
-Also some explanations were added in `Makefile` and `crack.rb`
+Also some explanations were added to `Makefile` and `crack.rb`
 
 2. What is the flag?
 

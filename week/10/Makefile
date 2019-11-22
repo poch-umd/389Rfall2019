@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-g -fno-stack-protector -fno-pie -fPIC
 LDLIBS=-lcrypto
 OBJECTS=crypto.o common.o
-TARGETS=ledger crack
+TARGETS=ledger writeup/crack
 
 ledger: ledger.o $(OBJECTS)
 

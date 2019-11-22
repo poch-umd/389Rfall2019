@@ -63,7 +63,7 @@ Generate another rainbow table by hashing the range 0..65536. This was written a
 
 Finally read off the MD5 hash of `ledger.bin` consult the two rainbow tables to essentially reverse the process and arrive at a sample passcode to use. The flag is then decrypted.
 
-`ledger` can be run using `crack` with backticks or alternatively as `./ledger $(./crack)` 
+`ledger` can be run using `crack` with backticks or alternatively as `./ledger $(writeup/crack)` 
 
 Also some explanations were added in `Makefile` and `crack.rb`
 

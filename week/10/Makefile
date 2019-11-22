@@ -6,12 +6,13 @@ TARGETS=ledger crack
 
 ledger: ledger.o $(OBJECTS)
 
-crack: crack.o $(OBJECTS)
+writeup/crack:
+	make -j 4 -C writeup
 
 clean:
 	rm -rf *.o $(TARGETS) *.bin
 
-all: ledger crack
+all: ledger writeup/crack
 
 .PHONY=clean
 .DEFAULT_GOAL=all

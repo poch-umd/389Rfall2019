@@ -23,7 +23,7 @@ offset 48: start of ciphertext
 
 2. What specific cryptographic implementations are used by the program? I.e. not "hashing", but a specific algorithm. Why might this pose a risk?
 
-MD5 for hashes, AES-128 for symmetric-key encryption and decryption. There are more secure algorithms such as SHA256 for hashes and AES-256 CBC. Also by using symmetric-key algorithms the key has to be pre-shared somehow, which risks disclosure.
+MD5 for hashes, AES-128 for symmetric-key encryption and decryption. There are more secure algorithms such as SHA256 for hashes and AES-256 CBC. Also by using symmetric-key algorithms the key has to be pre-shared somehow, which risks disclosure (eg, it has to be typed on the command line as plaintext which appears in a shell's history)
 
 3. What information, if any, are you able to derive from [ledger.bin](ledger.bin) without decrypting it at all?
 
@@ -63,7 +63,7 @@ Generate another rainbow table by hashing the range 0..65536. This was written a
 
 Finally read off the MD5 hash of `ledger.bin` and consult the two rainbow tables to essentially reverse the process and arrive at a sample passcode to use. The flag is then decrypted.
 
-`ledger` can be run using `crack` with backticks or alternatively as `./ledger $(writeup/crack)` 
+After running make, `ledger` can be run using `crack` with backticks or alternatively as `./ledger $(writeup/crack)` 
 
 Also some explanations were added to `Makefile` and `crack.rb`
 
@@ -77,10 +77,6 @@ CMSC389R-{k3y5p4c3_2_sm411}
 
 While most will probably argue that there is no security by obscurity, I've certainly seen many cases where security by obscurity succeeded despite its apparent insecurity. A few examples would be hiding a house key in a secret spot temporarily for a relative who's forgotten their key and cannot get in, writing down part of a password on a piece of paper (the rest of the pasword cannot be guessed easily), and finding a lost wallet that thankfully no one else has noticed.
 
-I could argue then that an ideal balance could lie a little further away from Kirchoff's principle towards security by obscurity if the risk can be mitigated by the period of time (ie, it's a brief or temporary event) and a good level of difficulty in exploring a search space whether systematically or via some heuristic, or if what's being protected isn't worthwhile to others (ie, other people either don't care or busy doing something else). But I would add that the risk increases dramatically in the presence of automation (eg, electronic) or if the attacker is well-funded or determined.
+I could argue then that an ideal balance could lie a little further away from Kirchoff's principle towards security by obscurity if the risk can be mitigated by the period of time (ie, it's a brief or temporary event) and a good level of difficulty in exploring a search space whether systematically or via some heuristic, or if what's being protected isn't worthwhile to others (ie, other people either don't care or are busy doing something else). But I would add that the risk increases dramatically in the presence of automation (eg, electronic) or if the attacker is well-funded or determined.
 
-One counter-argument is from an apocryphal story: Law enforcement was set to release an apprehended individual known to coordinate criminal activity with their cell phone, which has a secure and difficult-to-remember passcode.
-
-The story goes that the individual has placed a cryptic version of each character of their passcode in random places over their tatoo-covered body as a form of security by obscurity; yet the cybersecurity team was able to figure this out in time to obtain the correct passcode and incriminate the individual.
-
-However legend has it that the correct passcode was obtained through other means; and mysteriously enough involved either a rubber hose and/or feathers.
+In the Binaries II assignment, the per-session administrative password was obtained by running the same algorithm with the same random number generator seed as the server's; however the method to generate this password was normally hidden from an attacker and would make the password difficult to impossible to guess or brute-force (assuming a user session cannot be sniffed).

@@ -23,33 +23,33 @@ offset 48: start of ciphertext
 
 2. What specific cryptographic implementations are used by the program? I.e. not "hashing", but a specific algorithm. Why might this pose a risk?
 
-MD5, AES-128. Only the first two bytes of the MD5 hash (2Bytes) of the password is used, which permits the attacker to search only 65536 hashes to obtain a password.
+MD5 for hashes, AES-128 for symmetric-key encryption and decryption. There are more secure algorithms such as SHA256 for hashes and AES-256 CBC. Also by using symmetric-key algorithms the key has to be pre-shared somehow, which risks disclosure.
 
 3. What information, if any, are you able to derive from [ledger.bin](ledger.bin) without decrypting it at all?
 
-The MD5 hash of the 2Bytes hash of the password, the initial vector. The approximate length of the plaintext perhaps.
+The MD5 hash of the hash of the password, the initial vector, and the approximate length of the plaintext perhaps.
 
 4. How does the application ensure Confidentiality? How is the encryption key derived?
 
-By encrypting the message. The encryption key is the first two bytes of the MD5 hash of the original passcode.
+By encrypting the message with a symmetric-key algorithm. The encryption key is the first two bytes of the MD5 hash of the original passcode.
 
 5. How does the application ensure Integrity? Is this flawed in any way?
 
-By storing the hash of the encrypted message; this is flawed because the hash itself can be tampered with or replaced altogether.
+By storing the hash of the encrypted message (ie, the ciphertext). This is flawed because the ciphertext is hashed, not the plaintext. In addition the hash can be replaced altogether alongside the ciphertext.
 
 6. How does the application ensure Authenticity? Is this flawed in any way?
 
-I don't think that it ensures authenticity.
+By being based on symmetric-key encryption it's assumed that only the communicating parties can encrypt and decrypt the message. But it's flawed because the sender cannot authenticate that the message isn't from themselves, and only the first two bytes of the MD5 hash f the password is used, which effectively gives an attacker the password and can act as one of the parties.
 
 7. How is the initialization vector generated and subsequently stored? Are there any issues with this implementation?
 
-It is randomly generated and stored as is. The IV is typically stored in this manner (I think)
+It's randomly generated and stored as is. The IV is typically stored in this manner but should not be reused as implemented.
 
 ### Part 2 (45 Pts)
 
 1. Develop the crack utility in a language of your choice..
 
-First in order to compile ledger.c, `sudo apt install libssl-dev` was run (which installed 1.1.0l). But on a recent Kali version I kept getting compilation errors so I used a 32-bit version of Debian which worked.
+First in order to compile ledger.c, `sudo apt install libssl-dev` was run (which installed 1.1.0l). But on a recent Kali version I kept getting compilation errors so I used a 32-bit version of Debian which worked. Ubuntu on WSL worked as well.
 
 Then by looking at `ledger.c` it can be seen that the passcode is hashed, but only the first two bytes are hashed subsequently to produce the stored passcode hash. As such the search space has been reduced to 256^2 = 65536; thus to reverse the process it's only necessary to find 65536 passcodes whose first two bytes of their md5 hash range from 0..65536 (ie, when interpreted as a 16-bit unsigned number).
 
@@ -57,11 +57,11 @@ The table to reverse the hash is called a rainbow table; two can be used but it 
 
 After some hacking and trial-and-error, I arrived at the following process:
 
-Generate one rainbow table by hashing lines of the `rockyou.txt` wordlist and inspecting the first two bytes of the hash and taking only 65536 unique ones. Two perl one-liners were written and placed in the `Makefile` which perform this type of filtering. These unique hash/password pairs are saved in `crack.rb` for later use. `rockyou_command.sh` was added to locate the wordlist.
+Generate one rainbow table by hashing lines of the `rockyou.txt` wordlist and inspecting the first two bytes of the hash and taking only 65536 unique ones. Two perl one-liners were written and placed in the `Makefile` as a pipeline which perform this type of filtering. These unique hash/password pairs are saved in `crack.rb` for later use. `rockyou_command.sh` was added to locate the wordlist.
 
 Generate another rainbow table by hashing the range 0..65536. This was written as a one-liner in `crack.rb` (other lines are there to read `ledger.bin` among other things)
 
-Finally read off the MD5 hash of `ledger.bin` consult the two rainbow tables to essentially reverse the process and arrive at a sample passcode to use. The flag is then decrypted.
+Finally read off the MD5 hash of `ledger.bin` and consult the two rainbow tables to essentially reverse the process and arrive at a sample passcode to use. The flag is then decrypted.
 
 `ledger` can be run using `crack` with backticks or alternatively as `./ledger $(writeup/crack)` 
 

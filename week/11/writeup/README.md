@@ -12,7 +12,7 @@ Digital acknowledgement: Marco Roxas
 
 Such a Quick Little, website!  [http://142.93.136.81:5000/](http://142.93.136.81:5000/)
 
-I wasn't able to find a way to obtain the flag despite a good hint from an instructor. There's a WAF (Web App Firewall) active on the server that I'm not able to find a way to bypass in the time allotted.
+I wasn't able to find a way to obtain the flag despite a good hint from an instructor. There's a WAF (Web App Firewall) that is active on the server which I'm not able to find a way to bypass in the time allotted.
 
 Some URL strings that I tried were the following (with some comments):
 
@@ -32,7 +32,7 @@ http://142.93.136.81:5000/item?1&id=1&1OR1
 http://142.93.136.81:5000/item?1&id=1 OR 1=1
 ~~~~
 
-Basic ideas were tried above, some of which triggered the WAF. It was hoped that using the PHP `$` with variable names can result in bypassing it the WAF.
+Basic ideas were tried above, some of which triggered the WAF. It was hoped that using the PHP `$` with variable names can result in bypassing the WAF.
 
 ~~~~
 http://142.93.136.81:5000/item?id=0 {$name[1]}{$name[2]} 1=1;--
@@ -97,7 +97,7 @@ http://142.93.136.81:5000/item?id=0+O%%R+1=1--
 http://142.93.136.81:5000/item?id=0 \O\R 1=1; --
 ~~~~
 
-Finally a few more ideas were tried as shown above, such as utilizing escape sequences like `0x52` and the SQL `CHAR()` function.  Interestingly using `$PHP_MINOR_VERSION` triggered the WAF while a shorter `$PHP_MIN` did not. Bypassing the WAF was also attempted by using `#` or `%`.
+Finally a few more ideas were tried as shown above, such as utilizing other encodings `0x52` and the SQL `CHAR()` function (which was not the correct usage).  Interestingly using `$PHP_MINOR_VERSION` triggered the WAF while a shorter `$PHP_MIN` did not. Bypassing the WAF was also attempted by using `#` or `%`.
 
 For many of these a space character may have been needed between the the semicolon and comment, ie, `; --`.
 

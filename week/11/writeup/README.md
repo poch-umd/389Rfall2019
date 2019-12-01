@@ -97,9 +97,11 @@ http://142.93.136.81:5000/item?id=0+O%%R+1=1--
 http://142.93.136.81:5000/item?id=0 \O\R 1=1; --
 ~~~~
 
-Finally a few more ideas were tried as shown above, such as utilizing other encodings `0x52` and the SQL `CHAR()` function (which was not the correct usage).  Interestingly using `$PHP_MINOR_VERSION` triggered the WAF while a shorter `$PHP_MIN` did not. Bypassing the WAF was also attempted by using `#` or `%`.
+A few more ideas were tried as shown above, such as utilizing other encodings `0x52` and the SQL `CHAR()` function (which was not the correct usage).  Interestingly using `$PHP_MINOR_VERSION` triggered the WAF while a shorter `$PHP_MIN` did not. Bypassing the WAF was also attempted by using the `#` or `%`. For many of these a space character may have been needed between the the semicolon and comment, ie, `; --`.
 
-For many of these a space character may have been needed between the the semicolon and comment, ie, `; --`.
+The few things I tried were in the lines of `http://142.93.136.81:5000/item?id=0 $_GET['key'] 1=1; --&key=OR` in the hopes of bypassing WAF via php processing.
+
+Also, I noticed the result was one of a blank page, a redirect to the main page, an internal server error, an error sql injection attempted, and a not found message.
 
 There is a flag obtainable on the main web page via port 80 of the same server (`CMSC389R-{h1dd3n_1n_plain_5ight}`), however that's not part of this assignment.
 
@@ -117,7 +119,7 @@ The following inputs were used:
 `<p onclick="alert('Hi');">Hi</p>` This level displayed an element and a `<script>` tag couldn't be used. Hence the alternative `onclick` attribute was tried and worked.
 
 #### Level 3
-`https://xss-game.appspot.com/level3/frame#2.jpg'/><script>alert('Hi');</script>` An image tag needed to be terminated for this level. By right-clicking on the resulting broken image icon and selecting View Image, the proper syntax to use was shown, and with some trial and error a string with starting `'/><script>` was found to work.
+`https://xss-game.appspot.com/level3/frame#2.jpg'/><script>alert('Hi');</script>` An image tag needed to be terminated for this level. By right-clicking on the resulting broken image icon and selecting View Image, the proper syntax to use was shown, and with some trial and error a string with starting `'/><script>` was found to work for it completed the html properly.
 
 #### Level 4
 `'+alert(5)+'` I realized that I needed to terminate the quote before introducing javascript code and then start a new quote afterwards (so the payload starts and ends with `''`, the empty string).

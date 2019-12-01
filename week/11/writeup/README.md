@@ -110,18 +110,20 @@ Complete all 6 levels of:
 
 The following inputs were used:
 
-~~~~
-<script>alert('Hi');</script>
+#### Level 1
+`<script>alert('Hi');</script>` This level just needed javascript within an html `<script>` tag.
 
-<p onclick="alert('Hi');">Hi</p>
+#### Level 2
+`<p onclick="alert('Hi');">Hi</p>` This level displayed an element and a `<script>` tag couldn't be used. Hence the alternative `onclick` attribute was tried and worked.
 
-https://xss-game.appspot.com/level3/frame#2.jpg'/><script>alert('Hi');</script>
-~~~~
+#### Level 3
+`https://xss-game.appspot.com/level3/frame#2.jpg'/><script>alert('Hi');</script>` An image tag needed to be terminated for this level. By right-clicking on the resulting broken image icon and selecting View Image, the proper syntax to use was shown, and with some trial and error a string with starting `'/><script>` was found to work.
 
-Level 1 just needed javascript within an html `<script>` tag.
+#### Level 4
+`'+alert(5)+'` I realized that I needed to terminate the quote before introducing javascript code and then start a new quote afterwards (so the payload starts and ends with `''`, the empty string).
 
-Level 2 displayed an element and a `<script>` tag couldn't be used. The `onclick` attribute was tried and worked.
+#### Level 5
+`https://xss-game.appspot.com/level5/frame/signup?next=javascript:alert('Hi')` Entering this in the URL address bar allowed an alert to be displayed, however I wasn't sure if this was the correct way, but it worked. I took a look at the page code to see that the redirect goes to `confirm.html` and a simple replacement was all that was necessary. I learned of the `javascript:` trick by looking for ways for the browser to run javascript.
 
-Level 3 required an image tag to be terminated. By right-clicking on the resulting broken image icon and selecting View Image, the proper syntax to use was shown, and with some trial and error a string with starting `'/><script>` was found to work.
-
-Level 4 I think utilized the moustache javascript library (or similar) so some way to escape the javascript code had to be found, which I was not able to in the time allotted to reach the next level.
+#### Level 6
+`https://xss-game.appspot.com/level6/frame#data:,alert('Hi');` Also entering this in the URL address bar allowed an alert to be displayed to load the external file, which is in actuality is a data URL. It helped to view the browser console of any messages to know how it was used as a src attribute.
